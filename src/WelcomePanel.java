@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class WelcomePanel extends JFrame {
 
@@ -60,8 +61,13 @@ public class WelcomePanel extends JFrame {
 		lblOwnerName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOwnerName.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		lblOwnerName.setForeground(Color.WHITE);
-		lblOwnerName.setBounds(137, 11, 426, 198);
+		lblOwnerName.setBounds(134, 141, 426, 57);
 		panel.add(lblOwnerName);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(WelcomePanel.class.getResource("/image/logo/Background@4x.png")));
+		lblNewLabel.setBounds(205, 11, 242, 145);
+		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));

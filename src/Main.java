@@ -4,11 +4,11 @@ public class Main {
 	public static void main(String[] args) {
 		
 		WelcomePanel WelcomePanel;
-		Information Information;
-		
+		SignUp Signup;
+		//Call WelcomePanel first and then Sign Up after finishing with the progress bar of WelcomePanel
 		try {
 			WelcomePanel = new WelcomePanel();
-			Information = new Information();
+			Signup = new SignUp();
 			
 			WelcomePanel.setVisible(true);
 			Thread.sleep(2000);
@@ -23,7 +23,7 @@ public class Main {
 				}
 				Thread.sleep(1000);
 				WelcomePanel.setVisible(false);
-			Information.setVisible(true);
+				Signup.setVisible(true);
 			} catch (Exception e) {
 			}
 

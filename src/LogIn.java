@@ -7,6 +7,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -22,6 +26,7 @@ public class LogIn extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUsername;
 	private JPasswordField loginPass;
+    private JButton btnLogin;
 
 	/**
 	 * Launch the application.
@@ -53,7 +58,7 @@ public class LogIn extends JFrame {
 		
 		JLabel lblZooImg = new JLabel("");
 		lblZooImg.setForeground(new Color(255, 255, 255));
-		lblZooImg.setIcon(new ImageIcon("E:\\Xeon Gaming\\Downloads\\scene-with-zoo-entrance-in-forest-background-vector (2).jpg"));
+		lblZooImg.setIcon(new ImageIcon(LogIn.class.getResource("/image/logo/scene-with-zoo-entrance-in-forest-background-vector (2).jpg")));
 		lblZooImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblZooImg.setFont(new Font("Perpetua Titling MT", Font.BOLD, 24));
 		lblZooImg.setBackground(new Color(255, 255, 255));
@@ -99,16 +104,7 @@ public class LogIn extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton btnLogin = new JButton("LOGIN");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Information inf = new Information();
-				inf.show();
-				
-				String name = txtUsername.getText();
-				int pass = Integer.parseInt(loginPass.getText());
-			}
-		});
+		btnLogin = new JButton("LOGIN");
 		btnLogin.setBounds(25, 11, 89, 23);
 		panel_1.add(btnLogin);
 		
@@ -130,5 +126,39 @@ public class LogIn extends JFrame {
 		});
 		btnReset.setBounds(143, 11, 89, 23);
 		panel_1.add(btnReset);
+	}
+	//Mutator with Parameter
+	public void display(String Name, String UserName, String Password){
+        
+
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                
+				String userName = txtUsername.getText();
+				String passWord = loginPass.getText();
+
+				if(e.getSource()==btnLogin){
+					if(userName.equals(UserName) && passWord.equals(Password)){
+                        OrderTicket  order = new OrderTicket();
+				        order.setVisible(true);
+				        order.setLocationRelativeTo(null);
+				        dispose();
+                        
+						String name = Name;
+
+						order.Name(name);
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Please insert the correct username and password");
+					}
+				}
+			
+                
+
+
+
+
+			}
+		});
 	}
 }

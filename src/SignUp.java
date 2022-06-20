@@ -22,27 +22,9 @@ public class SignUp extends JFrame {
 	private JTextField txtFullName;
 	private JTextField txtUsername;
 	private JPasswordField txtpass;
-	private JPasswordField txtconfirmpass;
+	private JPasswordField txtpass2;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SignUp frame = new SignUp();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	//Default Constructor
 	public SignUp() {
 		setTitle("Sign Up Screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,14 +81,6 @@ public class SignUp extends JFrame {
 		JButton btnReset = new JButton("RESET");
 		btnReset.setFont(new Font("Malgun Gothic", Font.BOLD, 14));
 		btnReset.setBackground(new Color(255, 51, 153));
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtFullName.setText("");
-				txtUsername.setText("");
-				txtpass.setText("");
-				txtconfirmpass.setText("");
-			}
-		});
 		btnReset.setBounds(28, 335, 104, 28);
 		panel_1.add(btnReset);
 		
@@ -130,17 +104,13 @@ public class SignUp extends JFrame {
 		txtpass.setBounds(179, 220, 258, 20);
 		panel.add(txtpass);
 		
-		txtconfirmpass = new JPasswordField();
-		txtconfirmpass.setForeground(Color.BLACK);
-		txtconfirmpass.setBackground(Color.WHITE);
-		txtconfirmpass.setBounds(179, 298, 258, 20);
-		panel.add(txtconfirmpass);
+		txtpass2 = new JPasswordField();
+		txtpass2.setForeground(Color.BLACK);
+		txtpass2.setBackground(Color.WHITE);
+		txtpass2.setBounds(179, 298, 258, 20);
+		panel.add(txtpass2);
 		
 		JButton btnEnter = new JButton("ENTER");
-		btnEnter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnEnter.setFont(new Font("Malgun Gothic", Font.BOLD, 14));
 		btnEnter.setForeground(Color.BLACK);
 		btnEnter.setBackground(new Color(255, 51, 204));
@@ -148,11 +118,6 @@ public class SignUp extends JFrame {
 		panel.add(btnEnter);
 		
 		JButton btnExit = new JButton("EXIT");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
 		btnExit.setFont(new Font("Malgun Gothic", Font.BOLD, 14));
 		btnExit.setBackground(new Color(255, 51, 204));
 		btnExit.setForeground(Color.BLACK);
@@ -160,7 +125,7 @@ public class SignUp extends JFrame {
 		panel.add(btnExit);
 		
 		JLabel lblZooImg = new JLabel("");
-		lblZooImg.setIcon(new ImageIcon("E:\\Xeon Gaming\\Downloads\\depositphotos_28402621-stock-photo-cartoon-zoo-illustration-for-the.jpg"));
+		lblZooImg.setIcon(new ImageIcon(SignUp.class.getResource("/image/logo/depositphotos_28402621-stock-photo-cartoon-zoo-illustration-for-the (1).jpg")));
 		lblZooImg.setBounds(452, 0, 167, 374);
 		panel.add(lblZooImg);
 		
@@ -170,5 +135,39 @@ public class SignUp extends JFrame {
 		lblWelcome.setForeground(Color.WHITE);
 		lblWelcome.setBounds(180, 11, 257, 28);
 		panel.add(lblWelcome);
+
+        //reset button
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtFullName.setText("");
+				txtUsername.setText("");
+				txtpass.setText("");
+				txtpass2.setText("");
+			}
+		});
+
+		//exit button
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+        
+		//enter button
+		btnEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+                LogIn login = new LogIn();
+				login.setVisible(true);
+				login.setLocationRelativeTo(null);
+				dispose();
+
+				String Name = txtFullName.getText();
+				String UserName = txtUsername.getText();
+				String Password = txtpass.getText();
+                
+                login.display(Name,UserName,Password);
+			}
+		});
 	}
 }

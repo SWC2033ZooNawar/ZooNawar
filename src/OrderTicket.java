@@ -27,42 +27,55 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
+import com.github.lgooddatepicker.components.DateTimePicker;
+import javax.swing.JTree;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.ImageIcon;
+import javax.swing.SpinnerNumberModel;
+import com.github.lgooddatepicker.components.TimePicker;
+import javax.swing.JSeparator;
 
 public class OrderTicket extends JFrame {
 	
+	DecimalFormat priceformatter = new DecimalFormat("#0.00");
+	
 	private JPanel contentPane;
-	private JTextField txtName;
 	private JTextField txtPhoneNumber;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JTextField txtAdults;
-	private JTextField txtKids;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					OrderTicket frame = new OrderTicket();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField txtNameOut;
+	private JTextField txtPhoneNumOut;
+	private JTextField txtAdultsout;
+	private JTextField txtChildOut;
+	private JTextField txtAdditionalOut;
+	private JTextField txtMembershipOut;
+	private JTextField txtDateOut;
+	private JTextField txtTimeOut;
+	private JTextField txtTotal;
+	private JSpinner txtKids;
+	private JSpinner txtAdults;
+	private JButton btnSubmit;
+	private JCheckBox chckbxTramRide;
+	private JCheckBox chckbxAquarium;
+	private JRadioButton rdbtnYes;
+	private JRadioButton rdbtnNo;
+	private JDateChooser dateChooser;
+	private TimePicker timePicker;
+	private JLabel lblName;
 
-	/**
-	 * Create the frame.
-	 */
+	//Default Constructor
 	public OrderTicket() {
 		setTitle("Order");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 550);
+		setBounds(100, 100, 954, 543);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 153, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,7 +84,7 @@ public class OrderTicket extends JFrame {
 		
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 684, 21);
+		menuBar.setBounds(0, 0, 938, 21);
 		contentPane.add(menuBar);
 		
 		JMenu mnHelp = new JMenu("Help");
@@ -92,7 +105,7 @@ public class OrderTicket extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 102, 102));
-		panel.setBounds(0, 414, 584, 97);
+		panel.setBounds(10, 414, 558, 79);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -102,13 +115,6 @@ public class OrderTicket extends JFrame {
 		panel_1.setBounds(20, 81, 533, 322);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
-		
-		txtAdults = new JTextField();
-		txtAdults.setText("0");
-		txtAdults.setEnabled(false);
-		txtAdults.setBounds(232, 76, 47, 20);
-		panel_1.add(txtAdults);
-		txtAdults.setColumns(10);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(0, 0, 144, 322);
@@ -142,72 +148,25 @@ public class OrderTicket extends JFrame {
 		lblNewLabel_3.setBounds(10, 207, 124, 14);
 		panel_2.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("Date : ");
-		lblNewLabel_4.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
-		lblNewLabel_4.setBounds(10, 239, 46, 14);
-		panel_2.add(lblNewLabel_4);
-		
-		txtName = new JTextField();
-		txtName.setBounds(154, 11, 369, 20);
-		panel_1.add(txtName);
-		txtName.setColumns(10);
+		JLabel lblDatetime = new JLabel("Date and Time : ");
+		lblDatetime.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblDatetime.setBounds(10, 243, 124, 14);
+		panel_2.add(lblDatetime);
 		
 		txtPhoneNumber = new JTextField();
-		txtPhoneNumber.setBounds(154, 42, 144, 20);
+		txtPhoneNumber.setBounds(154, 42, 164, 20);
 		panel_1.add(txtPhoneNumber);
 		txtPhoneNumber.setColumns(10);
-		
-		txtKids = new JTextField();
-		txtKids.setText("0");
-		txtKids.setEnabled(false);
-		txtKids.setColumns(10);
-		txtKids.setBounds(232, 113, 47, 20);
-		panel_1.add(txtKids);
-		
-		JCheckBox chckbxAdult = new JCheckBox("Adults");
-		chckbxAdult.setBackground(new Color(255, 153, 255));
-		chckbxAdult.setBounds(150, 75, 81, 23);
-		panel_1.add(chckbxAdult);
-		chckbxAdult.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if (chckbxAdult.isSelected()) {
-					txtAdults.setEnabled(true);
-					
-				}
-				else {
-					txtAdults.setText("");
-					txtAdults.setEnabled(false);
-					
-				}
-		}
-		});
-		
-		JCheckBox chckbxChildren = new JCheckBox("Children");
-		chckbxChildren.setBackground(new Color(255, 153, 255));
-		chckbxChildren.setBounds(150, 112, 81, 23);
-		panel_1.add(chckbxChildren);
-		chckbxChildren.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if (chckbxChildren.isSelected()) {
-					txtKids.setEnabled(true);
-				}
-				else {
-					txtKids.setText("");
-					txtKids.setEnabled(false);
-				}
-		}
-		});
+
 		
 		JCheckBox chckbxTramRide = new JCheckBox("Tram Ride");
 		chckbxTramRide.setBackground(new Color(255, 153, 255));
-		chckbxTramRide.setBounds(150, 144, 81, 23);
+		chckbxTramRide.setBounds(150, 144, 134, 23);
 		panel_1.add(chckbxTramRide);
 		
 		JCheckBox chckbxAquarium = new JCheckBox("Aquarium");
 		chckbxAquarium.setBackground(new Color(255, 153, 255));
-		chckbxAquarium.setBounds(150, 170, 81, 23);
+		chckbxAquarium.setBounds(150, 170, 134, 23);
 		panel_1.add(chckbxAquarium);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
@@ -258,64 +217,280 @@ public class OrderTicket extends JFrame {
 		lblNewLabel_4_1.setBounds(328, 42, 195, 36);
 		panel_1.add(lblNewLabel_4_1);
 		
+		JSpinner txtAdults = new JSpinner();
+		txtAdults.setModel(new SpinnerNumberModel(0, 0, 30, 1));
+		txtAdults.setBounds(242, 73, 76, 20);
+		panel_1.add(txtAdults);
+		
+		JSpinner txtKids = new JSpinner();
+		txtKids.setModel(new SpinnerNumberModel(0, 0, 30, 1));
+		txtKids.setBounds(242, 113, 76, 20);
+		panel_1.add(txtKids);
+		
+		JLabel lblAdult = new JLabel("Adults : ");
+		lblAdult.setBounds(154, 76, 46, 14);
+		panel_1.add(lblAdult);
+		
+		JLabel lblChildren = new JLabel("Children : ");
+		lblChildren.setBounds(154, 116, 78, 14);
+		panel_1.add(lblChildren);
+
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(154, 235, 108, 20);
+		dateChooser.setBounds(154, 243, 116, 20);
 		panel_1.add(dateChooser);
 		
+		TimePicker timePicker = new TimePicker();
+		timePicker.setBounds(270, 243, 80, 21);
+		panel_1.add(timePicker);
+		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(280, 288, 89, 23);
+		panel_1.add(btnSubmit);
+		
+		lblName = new JLabel("");
+		lblName.setBounds(154, 17, 164, 14);
+		panel_1.add(lblName);
+		
 		JButton btnClear = new JButton("Clear");
+		btnClear.setBackground(new Color(204, 51, 51));
+		btnClear.setFont(new Font("Lato", Font.BOLD, 16));
+		btnClear.setBounds(81, 11, 140, 57);
+		panel.add(btnClear);
+		
+		JButton btnPay = new JButton("Pay");
+		btnPay.setFont(new Font("Lato", Font.BOLD, 16));
+		btnPay.setBounds(357, 11, 140, 57);
+		panel.add(btnPay);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(new Color(204, 153, 153));
+		panel_4.setBounds(594, 33, 334, 460);
+		contentPane.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(new Color(0, 102, 102));
+		panel_5.setBounds(0, 0, 160, 464);
+		panel_4.add(panel_5);
+		panel_5.setLayout(null);
+		
+		JLabel lblOutName = new JLabel("Name : ");
+		lblOutName.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutName.setBounds(10, 33, 140, 14);
+		panel_5.add(lblOutName);
+		
+		JLabel lblOutPhonenum = new JLabel("Phone Number : ");
+		lblOutPhonenum.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutPhonenum.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutPhonenum.setBounds(10, 80, 140, 14);
+		panel_5.add(lblOutPhonenum);
+		
+		JLabel lblOutAdults = new JLabel("Adults Amount : ");
+		lblOutAdults.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutAdults.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutAdults.setBounds(10, 127, 140, 14);
+		panel_5.add(lblOutAdults);
+		
+		JLabel lblOutChild = new JLabel("Children Amount : ");
+		lblOutChild.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutChild.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutChild.setBounds(10, 174, 140, 14);
+		panel_5.add(lblOutChild);
+		
+		JLabel lblOutAdditional = new JLabel("Additional :");
+		lblOutAdditional.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutAdditional.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutAdditional.setBounds(10, 221, 140, 14);
+		panel_5.add(lblOutAdditional);
+		
+		JLabel lblOutMembership = new JLabel("Membership : ");
+		lblOutMembership.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutMembership.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutMembership.setBounds(10, 268, 140, 14);
+		panel_5.add(lblOutMembership);
+		
+		JLabel lblOutDate = new JLabel("Date : ");
+		lblOutDate.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblOutDate.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOutDate.setBounds(10, 315, 140, 14);
+		panel_5.add(lblOutDate);
+		
+		JLabel lblTimeOut = new JLabel("Time : ");
+		lblTimeOut.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblTimeOut.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTimeOut.setBounds(10, 362, 140, 14);
+		panel_5.add(lblTimeOut);
+		
+		JLabel lblTotalAmount = new JLabel("Total Amount : ");
+		lblTotalAmount.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotalAmount.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		lblTotalAmount.setBounds(10, 409, 140, 14);
+		panel_5.add(lblTotalAmount);
+		
+		txtNameOut = new JTextField();
+		txtNameOut.setBounds(160, 32, 174, 20);
+		panel_4.add(txtNameOut);
+		txtNameOut.setColumns(10);
+		
+		txtPhoneNumOut = new JTextField();
+		txtPhoneNumOut.setBounds(160, 78, 174, 20);
+		panel_4.add(txtPhoneNumOut);
+		txtPhoneNumOut.setColumns(10);
+		
+		txtAdultsout = new JTextField();
+		txtAdultsout.setBounds(160, 125, 174, 20);
+		panel_4.add(txtAdultsout);
+		txtAdultsout.setColumns(10);
+		
+		txtChildOut = new JTextField();
+		txtChildOut.setBounds(160, 172, 174, 20);
+		panel_4.add(txtChildOut);
+		txtChildOut.setColumns(10);
+		
+		txtAdditionalOut = new JTextField();
+		txtAdditionalOut.setHorizontalAlignment(SwingConstants.CENTER);
+		txtAdditionalOut.setBounds(160, 218, 174, 20);
+		panel_4.add(txtAdditionalOut);
+		txtAdditionalOut.setColumns(10);
+		
+		txtMembershipOut = new JTextField();
+		txtMembershipOut.setBounds(160, 265, 174, 20);
+		panel_4.add(txtMembershipOut);
+		txtMembershipOut.setColumns(10);
+		
+		txtDateOut = new JTextField();
+		txtDateOut.setBounds(160, 314, 174, 20);
+		panel_4.add(txtDateOut);
+		txtDateOut.setColumns(10);
+		
+		txtTimeOut = new JTextField();
+		txtTimeOut.setBounds(160, 361, 174, 20);
+		panel_4.add(txtTimeOut);
+		txtTimeOut.setColumns(10);
+		
+		txtTotal = new JTextField();
+		txtTotal.setBounds(160, 407, 173, 20);
+		panel_4.add(txtTotal);
+		txtTotal.setColumns(10);
+		
+		JButton btnCancel = new JButton("Cancel");
+
+		btnCancel.setBounds(202, 426, 93, 34);
+		panel_4.add(btnCancel);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(new Color(153, 153, 204));
+		panel_6.setBounds(120, 44, 334, 38);
+		contentPane.add(panel_6);
+		panel_6.setLayout(null);
+		
+		JLabel lblNewLabel_15 = new JLabel("Order for Customer : ");
+		lblNewLabel_15.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_15.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+		lblNewLabel_15.setBounds(0, 0, 329, 38);
+		panel_6.add(lblNewLabel_15);
+		
+		JLabel lblNewLabel_4 = new JLabel("hah");
+		lblNewLabel_4.setIcon(new ImageIcon(OrderTicket.class.getResource("/image/logo/Cartoon-zoo-design-vectors-02.png")));
+		lblNewLabel_4.setBounds(20, 32, 100, 50);
+		contentPane.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_7 = new JLabel("New label");
+		lblNewLabel_7.setIcon(new ImageIcon(OrderTicket.class.getResource("/image/logo/imageszoo1.png")));
+		lblNewLabel_7.setBounds(454, 33, 100, 48);
+		contentPane.add(lblNewLabel_7);
+		
+		//Cancel Button (Exit The Program)
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+
+        //Clear button (Clear the texts)
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				txtName.setText("");
 				txtPhoneNumber.setText("");
-				txtAdults.setText("0");
-				txtKids.setText("0");
-				
-				chckbxAdult.setSelected(false);
-				chckbxChildren.setSelected(false);
+				txtAdults.setValue(0);
+				txtKids.setValue(0);
+				dateChooser.setToolTipText("");
+					
 				chckbxTramRide.setSelected(false);
 				chckbxAquarium.setSelected(false);
 				rdbtnNo.setSelected(true);
 				rdbtnYes.setSelected(false);
-				txtAdults.setEnabled(false);
-				txtKids.setEnabled(false);
+				
 				
 			}
 		});
-		btnClear.setFont(new Font("Lato", Font.BOLD, 16));
-		btnClear.setBounds(81, 11, 140, 75);
-		panel.add(btnClear);
-		
-		JButton btnOrder = new JButton("Pay");
-		btnOrder.addActionListener(new ActionListener() {
+
+        //Order Button
+		btnPay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String CustomerName = txtName.getText();
+				if(e.getSource()==btnPay){
+					
+				String CustomerName = lblName.getText();
 				String PhoneNum = txtPhoneNumber.getText();
+				String Membership = null;
 				double TramRide = 0;
 				double Aquarium = 0;
-				double NumChildren = Double.parseDouble(txtKids.getText());
-				double NumAdult = Double.parseDouble(txtAdults.getText());
-				double MembershipTotal = 0;
+				int NumChildren = (int) txtKids.getValue();
+				int NumAdult = (int) txtAdults.getValue();
+				double MembershipTotal;
+				double AdditionalPrice =0.00;
+				int totalCategory = 0;
+				int AdultPrice = 0;
+				int ChildPrice = 0;
+				double PriceTotal = 0.00;
+				String TramRideBool = null ;
+				String AquariumBool = null;
+                String tramRide = "";
+				String aquarium = "";
+
+				String txtAdultCalc;
+				String txtChildCalc;
 				
-				
+					AdultPrice = NumAdult * 15;
+					ChildPrice = NumChildren * 7;
+					txtAdultCalc = ("" + AdultPrice);
+					txtChildCalc = ("" + ChildPrice);
+
 				if(chckbxTramRide.isSelected()) {
-					TramRide = 6 * NumChildren * NumAdult;
+					totalCategory = NumAdult + NumChildren;
+					TramRide = 6 *totalCategory; 
+					txtAdditionalOut.setText(" | Tram Ride |");
+					TramRideBool = "True";
+					tramRide += "Tram Ride | ";
 				}
 				if(chckbxAquarium.isSelected()) {
-					Aquarium = 12 * NumChildren * NumAdult;
+					Aquarium = 12 *totalCategory;
+					txtAdditionalOut.setText("| Aquarium |");
+					AquariumBool = "True";
+					aquarium += " Aquarium";
+				}if(chckbxAquarium.isSelected() && chckbxTramRide.isSelected()) {
+					TramRide = 6 *totalCategory; 
+					Aquarium = 12 *totalCategory;
+					TramRideBool = "True";
+					AquariumBool = "True";
+					txtAdditionalOut.setText(" | Aquarium |  | Tram Ride | ");
 				}
-				if (rdbtnYes.isSelected() == true) {
-					MembershipTotal = 0.20 * NumChildren * NumAdult;
+				if (rdbtnYes.isSelected()) {
+
+					AdditionalPrice = Aquarium + TramRide;
+
+					MembershipTotal = (AdditionalPrice + AdultPrice + ChildPrice) * 0.20;
+					PriceTotal = (AdditionalPrice + AdultPrice + ChildPrice) - MembershipTotal;
+					Membership = "True";
+					txtTotal.setText("" + PriceTotal);
+
+				}else if (rdbtnNo.isSelected()){
+					PriceTotal = TramRide + Aquarium + AdultPrice + ChildPrice;
+					Membership = "False";
+					txtTotal.setText("" + PriceTotal);
 				}
-				
-				double PriceChildren = 0;
-				PriceChildren = 7 * NumChildren;
-				double PriceAdult = 0;
-				PriceAdult = 15 * NumAdult;
-				double PriceTotal = 0;
-				PriceTotal = PriceChildren + PriceAdult + TramRide + Aquarium + MembershipTotal;		
 				
 				boolean process = false;
 				boolean nameerror = false;
@@ -329,13 +504,6 @@ public class OrderTicket extends JFrame {
 				}
 				if (PhoneNum.isEmpty()) {
 					phonenoerror = true;
-				}
-				if (chckbxChildren.isSelected() == true && NumChildren == 0) {
-					childrenerror = true;
-					
-				}
-				if (chckbxChildren.isSelected() == true && NumAdult == 0) {
-					adulterror = true;
 				}
 				
 				if (nameerror || phonenoerror || childrenerror || adulterror ) {
@@ -355,21 +523,125 @@ public class OrderTicket extends JFrame {
 					JOptionPane.showMessageDialog(null,error,"",JOptionPane.ERROR_MESSAGE);
 				} else {
 					process = true;
-					Payment jf3 = new Payment();
-					jf3.show();
-					jf3.my_update(CustomerName, PhoneNum, TramRide, Aquarium, PriceChildren, PriceAdult, PriceTotal, MembershipTotal);
-					dispose();
+					
+					SimpleDateFormat Tdate = new SimpleDateFormat("E,dd-MM-yyyy");
+					String Date = Tdate.format(dateChooser.getDate());
+
+			        Receipt receipt = new Receipt();
+			        receipt.setVisible(true);
+			        receipt.setLocationRelativeTo(null);
+			        dispose();
+			        
+					        receipt.display(CustomerName, PhoneNum, Date, NumChildren, NumAdult ,txtAdultCalc, txtChildCalc, TramRideBool, AquariumBool,TramRide,Aquarium,  PriceTotal, Membership);
+				        }
 				}
 			}
 		});
-		btnOrder.setFont(new Font("Lato", Font.BOLD, 16));
-		btnOrder.setBounds(357, 11, 140, 75);
-		panel.add(btnOrder);
-		
-		JLabel lblOrderTitle = new JLabel("Order for Costumer");
-		lblOrderTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOrderTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		lblOrderTitle.setBounds(10, 32, 564, 38);
-		contentPane.add(lblOrderTitle);
+		//Submit button
+		btnSubmit.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+																
+				if(e.getSource()==btnSubmit){
+									
+				String CustomerName = lblName.getText();
+				String PhoneNum = txtPhoneNumber.getText();
+				double TramRide = 0;
+				double Aquarium = 0;
+				int NumChildren = (int) txtKids.getValue();
+				int NumAdult = (int) txtAdults.getValue();
+				double MembershipTotal;
+				double AdditionalPrice =0.00;
+				int totalCategory = 0;
+				int AdultPrice = 0;
+				int ChildPrice = 0;
+				double PriceTotal = 0.00;
+                String tramRide = "";
+				String aquarium = "";
+
+					AdultPrice = NumAdult * 15;
+					ChildPrice = NumChildren * 7;
+
+				if(chckbxTramRide.isSelected()) {
+					totalCategory = NumAdult + NumChildren;
+					TramRide = 6 *totalCategory; 
+					txtAdditionalOut.setText(" | Tram Ride |");
+					tramRide += "Tram Ride | ";
+				}
+				if(chckbxAquarium.isSelected()) {
+					Aquarium = 12 *totalCategory;
+					txtAdditionalOut.setText("| Aquarium |");
+					aquarium += " Aquarium";
+				}if(chckbxAquarium.isSelected() && chckbxTramRide.isSelected()) {
+					TramRide = 6 *totalCategory; 
+					Aquarium = 12 *totalCategory;
+					txtAdditionalOut.setText(" | Aquarium |  | Tram Ride | ");
+				}
+				if (rdbtnYes.isSelected()) {
+
+					AdditionalPrice = Aquarium + TramRide;
+
+					MembershipTotal = (AdditionalPrice + AdultPrice + ChildPrice) * 0.20;
+					PriceTotal = (AdditionalPrice + AdultPrice + ChildPrice) - MembershipTotal;
+					txtMembershipOut.setText("True");
+					txtTotal.setText("" + priceformatter.format(PriceTotal));
+
+				}else if (rdbtnNo.isSelected()){
+					PriceTotal = TramRide + Aquarium + AdultPrice + ChildPrice;
+					txtMembershipOut.setText("False");
+					txtTotal.setText("" + PriceTotal);
+				}		
+				
+				boolean process = false;
+				boolean nameerror = false;
+				boolean phonenoerror = false;
+				boolean childrenerror = false;
+				boolean adulterror = false;
+				
+				
+				if (CustomerName.isEmpty()) {
+					nameerror = true;
+				}
+				if (PhoneNum.isEmpty()) {
+					phonenoerror = true;
+				}
+				
+				if (nameerror || phonenoerror || childrenerror || adulterror ) {
+					String error = "Check your required field:";
+					if (nameerror) {
+						error += "\nName is empty";
+					}
+					if (phonenoerror) {
+						error += "\nPhone number is empty";
+					}
+					if (childrenerror) {
+						error += "\nNumber Of children is Empty";
+					}
+					if (adulterror) {
+						error += "\nNumber of Adults is Empty";
+					}
+					JOptionPane.showMessageDialog(null,error,"",JOptionPane.ERROR_MESSAGE);
+				} else {
+					process = true;
+					
+					SimpleDateFormat Tdate = new SimpleDateFormat("E,dd-MM-yyyy");
+					
+					txtAdditionalOut.setText(tramRide + aquarium);
+					txtNameOut.setText(CustomerName);
+					txtPhoneNumOut.setText(PhoneNum);
+					txtAdultsout.setText("" + NumAdult);
+					txtChildOut.setText("" + NumChildren);
+					txtDateOut.setText("" + Tdate.format(dateChooser.getDate()));
+					txtTimeOut.setText("" + timePicker.getTime());
+				}
+
+				
+				}
+			}
+			});
+	}
+	//Mutator with Parameter
+	public void Name(String name){
+		lblName.setText(name);
 	}
 }
