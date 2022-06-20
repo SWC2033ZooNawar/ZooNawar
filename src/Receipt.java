@@ -256,12 +256,12 @@ public class Receipt extends JFrame {
 					boolean payerror = false;
 					Double pricetotal = Double.parseDouble(priceformatter.format(priceTotal));
 					Double TotalPayment = Double.parseDouble(txtPay.getText());
-					//if to calculate if the Total Payment was bigger or smaller than the total needed to be paid
+					
 					if(pricetotal > TotalPayment) {
 						payerror = true;
 					}
 					if(pricetotal < TotalPayment) {
-						balance = TotalPayment - priceTotal; //Calculation to calculate balance for final Payment price
+						balance = TotalPayment - priceTotal;
 						lblCustName.setText(name);
 						lblPhoneNumOut.setText(phonenum);
 						lblMembershipOut.setText(Membership);
@@ -301,12 +301,12 @@ public class Receipt extends JFrame {
 		area.setText(area.getText() + "Phone Number  : " +phonenum + "\n");
 		area.setText(area.getText() + "Date : " +OrderDate +"\n");
 		
-		area.setText(area.getText() +"Adults Amounts : "  +numAdult +"  RM: "+AdultPrice +"\n" );
-        area.setText(area.getText() +"Childs Amounts : " +numChildren  +"  RM: "+ChildPrice+"\n\n\n");
+		area.setText(area.getText() +"Adults Amounts : "  +numAdult +"  "+AdultPrice +"\n" );
+        area.setText(area.getText() +"Childs Amounts : " +numChildren  +"  "+ChildPrice+"\n\n\n");
 
         area.setText(area.getText() + "=========================================================\n");
-        area.setText(area.getText() + "Tram Amount : " +tramRideBool +" RM: "+ tramRide +"\n");
-        area.setText(area.getText()+ "Aquarium : " +aquariumBool+" RM: "+aquarium + "\n");
+        area.setText(area.getText() + "Tram Amount : " +tramRideBool +" "+ tramRide +"\n");
+        area.setText(area.getText()+ "Aquarium : " +aquariumBool+" "+aquarium + "\n");
         area.setText(area.getText() + "=========================================================\n");
         
         area.setText(area.getText() + "=========================================================\n");
